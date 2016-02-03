@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" verbose="5" name="Failed suite [Main Test Suite]" parallel="classes">
+  <parameter name="appURL" value="https://uk.yahoo.com/"/>
+  <parameter name="browserType" value="safari"/>
+  <listeners>
+    <listener class-name="com.wordpressTest.framework.TestNGCustomReportListener"/>
+  </listeners>
+  <test name="Regression Test Group(failed)" parallel="classes">
+    <groups>
+      <run>
+        <include name="regression"/>
+        <include name="smoke"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="com.wordpressTest.tests.regressionTests.YahooTest">
+        <methods>
+          <include name="yahooSearch"/>
+        </methods>
+      </class> <!-- com.wordpressTest.tests.regressionTests.YahooTest -->
+    </classes>
+  </test> <!-- Regression Test Group(failed) -->
+</suite> <!-- Failed suite [Main Test Suite] -->

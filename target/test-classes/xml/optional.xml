@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Sample Test Suite" verbose="5">
+
+    <parameter name="param one" value="First parameter" />
+    <parameter name="param two" value="Second parameter" />
+
+    <parameter name="appURL" value="https://www.google.com/"/>
+    <parameter name="browserType" value="chrome"/>
+
+    <test name="OptionalParamExample">
+
+        <classes>
+            <class name="com.wordpressTest.tests.OptionalParamExample">
+                <methods>
+                    <include name="smoke"/>
+                    <exclude name="sanity"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

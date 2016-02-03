@@ -29,8 +29,8 @@ public class WordPressBaseTest {
         DriverFactory.setSauceLabsSessionStatusToFailed(result);
     }
 
-    @AfterClass(alwaysRun = true)
+    @AfterClass
     public void cleanUp(){
-        DriverFactory.endSession();
+        DriverFactory.getDriver().close();
     }
 }

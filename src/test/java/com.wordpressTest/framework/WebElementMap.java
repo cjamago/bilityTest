@@ -53,24 +53,46 @@ public class WebElementMap {
         String locatorType = locator.split(">")[0];
         String locatorValue = locator.split(">")[1];
 
-        if (locatorType.equalsIgnoreCase("id"))
-            return By.id(locatorValue);
-        else if (locatorType.equalsIgnoreCase("name"))
-            return By.name(locatorValue);
-        else if (locatorType.equalsIgnoreCase("classname"))
-            return By.className(locatorValue);
-        else if (locatorType.equalsIgnoreCase("tagname"))
-            return By.tagName(locatorValue);
-        else if (locatorType.equalsIgnoreCase("linktext"))
-            return By.linkText(locatorValue);
-        else if (locatorType.equalsIgnoreCase("partialinktext"))
-            return By.partialLinkText(locatorValue);
-        else if (locatorType.equalsIgnoreCase("cssselector"))
-            return By.cssSelector(locatorValue);
-        else if (locatorType.equalsIgnoreCase("xpath"))
-            return By.xpath(locatorValue);
-        else
-            throw new RuntimeException("Locator type '" + locatorType + "' not defined!");
+        switch (locatorType.toLowerCase()) {
+            case "id":
+                return By.id(locatorValue);
+            case "name":
+                return By.name(locatorValue);
+            case "classname" :
+                return By.className(locatorValue);
+            case "tagname" :
+                return By.tagName(locatorValue);
+            case "linktext" :
+                return By.linkText(locatorValue);
+            case "partialinktext" :
+                return By.partialLinkText(locatorValue);
+            case "cssselector" :
+                return By.cssSelector(locatorValue);
+            case "xpath" :
+                return By.xpath(locatorValue);
+            default:
+                throw new RuntimeException("Locator type '" + locatorType + "' not defined!");
+        }
+
+
+//        if (locatorType.equalsIgnoreCase("id"))
+//            return By.id(locatorValue);
+//        else if (locatorType.equalsIgnoreCase("name"))
+//            return By.name(locatorValue);
+//        else if (locatorType.equalsIgnoreCase("classname"))
+//            return By.className(locatorValue);
+//        else if (locatorType.equalsIgnoreCase("tagname"))
+//            return By.tagName(locatorValue);
+//        else if (locatorType.equalsIgnoreCase("linktext"))
+//            return By.linkText(locatorValue);
+//        else if (locatorType.equalsIgnoreCase("partialinktext"))
+//            return By.partialLinkText(locatorValue);
+//        else if (locatorType.equalsIgnoreCase("cssselector"))
+//            return By.cssSelector(locatorValue);
+//        else if (locatorType.equalsIgnoreCase("xpath"))
+//            return By.xpath(locatorValue);
+//        else
+//            throw new RuntimeException("Locator type '" + locatorType + "' not defined!");
 
     }
 }

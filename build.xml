@@ -1,649 +1,132 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="newmavenproject" default="all">
-
-
-    <property file="build.properties"/>
-    <!-- Uncomment the following property if no tests compilation is needed -->
-
-    <!--<property name="skip.tests" value="false"/>-->
-
-
-    <!-- Compiler options -->
-
-    <property name="compiler.debug" value="on"/>
-    <property name="compiler.generate.no.warnings" value="off"/>
-    <property name="compiler.args" value=""/>
-    <property name="compiler.max.memory" value="700m"/>
-    <patternset id="ignored.files">
-        <exclude name="**/*.hprof/**"/>
-        <exclude name="**/*.pyc/**"/>
-        <exclude name="**/*.pyo/**"/>
-        <exclude name="**/*.rbc/**"/>
-        <exclude name="**/*~/**"/>
-        <exclude name="**/.DS_Store/**"/>
-        <exclude name="**/.bundle/**"/>
-        <exclude name="**/.git/**"/>
-        <exclude name="**/.hg/**"/>
-        <exclude name="**/.svn/**"/>
-        <exclude name="**/.tox/**"/>
-        <exclude name="**/CVS/**"/>
-        <exclude name="**/RCS/**"/>
-        <exclude name="**/SCCS/**"/>
-        <exclude name="**/__pycache__/**"/>
-        <exclude name="**/_svn/**"/>
-        <exclude name="**/rcs/**"/>
-        <exclude name="**/vssver.scc/**"/>
-        <exclude name="**/vssver2.scc/**"/>
-    </patternset>
-    <patternset id="library.patterns">
-        <include name="*.war"/>
-        <include name="*.ear"/>
-        <include name="*.apk"/>
-        <include name="*.zip"/>
-        <include name="*.swc"/>
-        <include name="*.ane"/>
-        <include name="*.egg"/>
-        <include name="*.jar"/>
-    </patternset>
-    <patternset id="compiler.resources">
-        <exclude name="**/?*.java"/>
-        <exclude name="**/?*.form"/>
-        <exclude name="**/?*.class"/>
-        <exclude name="**/?*.groovy"/>
-        <exclude name="**/?*.scala"/>
-        <exclude name="**/?*.flex"/>
-        <exclude name="**/?*.kt"/>
-        <exclude name="**/?*.clj"/>
-        <exclude name="**/?*.aj"/>
-    </patternset>
-
-    <!-- JDK definitions -->
-
-    <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
-    <path id="jdk.classpath.1.8">
-        <fileset dir="${jdk.home.1.8}">
-            <include name="lib/ant-javafx.jar"/>
-            <include name="lib/dt.jar"/>
-            <include name="lib/javafx-mx.jar"/>
-            <include name="lib/jconsole.jar"/>
-            <include name="lib/packager.jar"/>
-            <include name="lib/sa-jdi.jar"/>
-            <include name="lib/tools.jar"/>
-            <include name="jre/lib/charsets.jar"/>
-            <include name="jre/lib/deploy.jar"/>
-            <include name="jre/lib/javaws.jar"/>
-            <include name="jre/lib/jce.jar"/>
-            <include name="jre/lib/jfr.jar"/>
-            <include name="jre/lib/jfxswt.jar"/>
-            <include name="jre/lib/jsse.jar"/>
-            <include name="jre/lib/management-agent.jar"/>
-            <include name="jre/lib/plugin.jar"/>
-            <include name="jre/lib/resources.jar"/>
-            <include name="jre/lib/rt.jar"/>
-            <include name="jre/lib/ext/cldrdata.jar"/>
-            <include name="jre/lib/ext/dnsns.jar"/>
-            <include name="jre/lib/ext/jfxrt.jar"/>
-            <include name="jre/lib/ext/localedata.jar"/>
-            <include name="jre/lib/ext/nashorn.jar"/>
-            <include name="jre/lib/ext/sunec.jar"/>
-            <include name="jre/lib/ext/sunjce_provider.jar"/>
-            <include name="jre/lib/ext/sunpkcs11.jar"/>
-            <include name="jre/lib/ext/zipfs.jar"/>
-        </fileset>
-    </path>
-
-    <property name="project.jdk.home" value="${jdk.home.1.8}"/>
-    <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
-    <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
-
-
-    <!-- Project Libraries -->
-
-    <path id="library.maven:_cglib:cglib-nodep:2.1_3.classpath">
-        <pathelement location="${path.variable.maven_repository}/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar"/>
-    </path>
-
-    <path id="library.maven:_com.beust:jcommander:1.48.classpath">
-        <pathelement location="${path.variable.maven_repository}/com/beust/jcommander/1.48/jcommander-1.48.jar"/>
-    </path>
-
-    <path id="library.maven:_org.scalatest:scalatest_2.11:2.2.4.classpath">
-        <pathelement location="${path.variable.maven_repository}/org/scalatest/scalatest_2.11/2.2.4/scalatest_2.11-2.2.4.jar"/>
-    </path>
-
-    <path id="library.maven:_com.saucelabs:saucerest:1.0.28.classpath">
-        <pathelement location="${path.variable.maven_repository}/com/saucelabs/saucerest/1.0.28/saucerest-1.0.28.jar"/>
-    </path>
-
-    <path id="library.maven:_com.github.detro.ghostdriver:phantomjsdriver:1.1.0.classpath">
-        <pathelement location="${path.variable.maven_repository}/com/github/detro/ghostdriver/phantomjsdriver/1.1.0/phantomjsdriver-1.1.0.jar"/>
-    </path>
-
-
-    <path id="library.maven:_joda-time:joda-time:2.9.1.classpath">
-        <pathelement location="${path.variable.maven_repository}/joda-time/joda-time/2.9.1/joda-time-2.9.1.jar"/>
-    </path>
-
-    <path id="library.maven:_com.google.code.gson:gson:2.3.1.classpath">
-        <pathelement location="${path.variable.maven_repository}/com/google/code/gson/gson/2.3.1/gson-2.3.1.jar"/>
-    </path>
-
-    <path id="library.maven:_com.google.guava:guava:18.0.classpath">
-        <pathelement location="${path.variable.maven_repository}/com/google/guava/guava/18.0/guava-18.0.jar"/>
-    </path>
-
-    <path id="library.maven:_commons-codec:commons-codec:1.9.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/commons-codec/commons-codec/1.9/commons-codec-1.9.jar"/>
-    </path>
-
-    <path id="library.maven:_commons-collections:commons-collections:3.2.1.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar"/>
-    </path>
-
-    <path id="library.maven:_commons-io:commons-io:2.4.classpath">
-        <pathelement location="${path.variable.maven_repository}/commons-io/commons-io/2.4/commons-io-2.4.jar"/>
-    </path>
-
-    <path id="library.maven:_commons-logging:commons-logging:1.2.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/commons-logging/commons-logging/1.2/commons-logging-1.2.jar"/>
-    </path>
-
-    <path id="library.maven:_io.netty:netty:3.5.2.final.classpath">
-        <pathelement location="${path.variable.maven_repository}/io/netty/netty/3.5.2.Final/netty-3.5.2.Final.jar"/>
-    </path>
-
-    <path id="library.maven:_junit:junit:3.8.1.classpath">
-        <pathelement location="${path.variable.maven_repository}/junit/junit/3.8.1/junit-3.8.1.jar"/>
-    </path>
-
-    <path id="library.maven:_net.java.dev.jna:jna-platform:4.1.0.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/net/java/dev/jna/jna-platform/4.1.0/jna-platform-4.1.0.jar"/>
-    </path>
-
-    <path id="library.maven:_net.java.dev.jna:jna:4.1.0.classpath">
-        <pathelement location="${path.variable.maven_repository}/net/java/dev/jna/jna/4.1.0/jna-4.1.0.jar"/>
-    </path>
-
-    <path id="library.maven:_net.sourceforge.cssparser:cssparser:0.9.16.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/net/sourceforge/cssparser/cssparser/0.9.16/cssparser-0.9.16.jar"/>
-    </path>
-
-    <path id="library.maven:_net.sourceforge.htmlunit:htmlunit-core-js:2.17.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/net/sourceforge/htmlunit/htmlunit-core-js/2.17/htmlunit-core-js-2.17.jar"/>
-    </path>
-
-    <path id="library.maven:_net.sourceforge.htmlunit:htmlunit:2.18.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/net/sourceforge/htmlunit/htmlunit/2.18/htmlunit-2.18.jar"/>
-    </path>
-
-    <path id="library.maven:_net.sourceforge.nekohtml:nekohtml:1.9.22.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/net/sourceforge/nekohtml/nekohtml/1.9.22/nekohtml-1.9.22.jar"/>
-    </path>
-
-    <path id="library.maven:_org.apache.ant:ant-launcher:1.7.0.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/apache/ant/ant-launcher/1.7.0/ant-launcher-1.7.0.jar"/>
-    </path>
-
-    <path id="library.maven:_org.apache.ant:ant:1.7.0.classpath">
-        <pathelement location="${path.variable.maven_repository}/org/apache/ant/ant/1.7.0/ant-1.7.0.jar"/>
-    </path>
-
-    <path id="library.maven:_org.apache.commons:commons-exec:1.3.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/apache/commons/commons-exec/1.3/commons-exec-1.3.jar"/>
-    </path>
-
-    <path id="library.maven:_org.apache.commons:commons-lang3:3.4.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.jar"/>
-    </path>
-
-    <path id="library.maven:_org.apache.httpcomponents:httpclient:4.5.1.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/apache/httpcomponents/httpclient/4.5.1/httpclient-4.5.1.jar"/>
-    </path>
-
-    <path id="library.maven:_org.apache.httpcomponents:httpcore:4.4.3.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/apache/httpcomponents/httpcore/4.4.3/httpcore-4.4.3.jar"/>
-    </path>
-
-    <path id="library.maven:_org.apache.httpcomponents:httpmime:4.5.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/apache/httpcomponents/httpmime/4.5/httpmime-4.5.jar"/>
-    </path>
-
-    <path id="library.maven:_org.beanshell:bsh:2.0b4.classpath">
-        <pathelement location="${path.variable.maven_repository}/org/beanshell/bsh/2.0b4/bsh-2.0b4.jar"/>
-    </path>
-
-    <path id="library.maven:_org.eclipse.jetty.websocket:websocket-api:9.2.12.v20150709.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/eclipse/jetty/websocket/websocket-api/9.2.12.v20150709/websocket-api-9.2.12.v20150709.jar"/>
-    </path>
-
-    <path id="library.maven:_org.eclipse.jetty.websocket:websocket-client:9.2.12.v20150709.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/eclipse/jetty/websocket/websocket-client/9.2.12.v20150709/websocket-client-9.2.12.v20150709.jar"/>
-    </path>
-
-    <path id="library.maven:_org.eclipse.jetty.websocket:websocket-common:9.2.12.v20150709.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/eclipse/jetty/websocket/websocket-common/9.2.12.v20150709/websocket-common-9.2.12.v20150709.jar"/>
-    </path>
-
-    <path id="library.maven:_org.eclipse.jetty:jetty-io:9.2.12.v20150709.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/eclipse/jetty/jetty-io/9.2.12.v20150709/jetty-io-9.2.12.v20150709.jar"/>
-    </path>
-
-    <path id="library.maven:_org.eclipse.jetty:jetty-util:9.2.12.v20150709.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/eclipse/jetty/jetty-util/9.2.12.v20150709/jetty-util-9.2.12.v20150709.jar"/>
-    </path>
-
-    <path id="library.maven:_org.seleniumhq.selenium:selenium-api:2.48.2.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/seleniumhq/selenium/selenium-api/2.48.2/selenium-api-2.48.2.jar"/>
-    </path>
-
-    <path id="library.maven:_org.seleniumhq.selenium:selenium-chrome-driver:2.48.2.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/seleniumhq/selenium/selenium-chrome-driver/2.48.2/selenium-chrome-driver-2.48.2.jar"/>
-    </path>
-
-    <path id="library.maven:_org.seleniumhq.selenium:selenium-edge-driver:2.48.2.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/seleniumhq/selenium/selenium-edge-driver/2.48.2/selenium-edge-driver-2.48.2.jar"/>
-    </path>
-
-    <path id="library.maven:_org.seleniumhq.selenium:selenium-firefox-driver:2.48.2.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/seleniumhq/selenium/selenium-firefox-driver/2.48.2/selenium-firefox-driver-2.48.2.jar"/>
-    </path>
-
-    <path id="library.maven:_org.seleniumhq.selenium:selenium-htmlunit-driver:2.48.2.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/seleniumhq/selenium/selenium-htmlunit-driver/2.48.2/selenium-htmlunit-driver-2.48.2.jar"/>
-    </path>
-
-    <path id="library.maven:_org.seleniumhq.selenium:selenium-ie-driver:2.48.2.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/seleniumhq/selenium/selenium-ie-driver/2.48.2/selenium-ie-driver-2.48.2.jar"/>
-    </path>
-
-    <path id="library.maven:_org.seleniumhq.selenium:selenium-java:2.48.2.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/seleniumhq/selenium/selenium-java/2.48.2/selenium-java-2.48.2.jar"/>
-    </path>
-
-    <path id="library.maven:_org.seleniumhq.selenium:selenium-leg-rc:2.48.2.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/seleniumhq/selenium/selenium-leg-rc/2.48.2/selenium-leg-rc-2.48.2.jar"/>
-    </path>
-
-    <path id="library.maven:_org.seleniumhq.selenium:selenium-remote-driver:2.48.2.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/seleniumhq/selenium/selenium-remote-driver/2.48.2/selenium-remote-driver-2.48.2.jar"/>
-    </path>
-
-    <path id="library.maven:_org.seleniumhq.selenium:selenium-safari-driver:2.48.2.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/seleniumhq/selenium/selenium-safari-driver/2.48.2/selenium-safari-driver-2.48.2.jar"/>
-    </path>
-
-    <path id="library.maven:_org.seleniumhq.selenium:selenium-support:2.48.2.classpath">
-        <pathelement
-                location="${path.variable.maven_repository}/org/seleniumhq/selenium/selenium-support/2.48.2/selenium-support-2.48.2.jar"/>
-    </path>
-
-    <path id="library.maven:_org.testng:testng:6.9.9.classpath">
-        <pathelement location="${path.variable.maven_repository}/org/testng/testng/6.9.9/testng-6.9.9.jar"/>
-    </path>
-
-    <path id="library.maven:_org.w3c.css:sac:1.3.classpath">
-        <pathelement location="${path.variable.maven_repository}/org/w3c/css/sac/1.3/sac-1.3.jar"/>
-    </path>
-
-    <path id="library.maven:_org.webbitserver:webbit:0.4.14.classpath">
-        <pathelement location="${path.variable.maven_repository}/org/webbitserver/webbit/0.4.14/webbit-0.4.14.jar"/>
-    </path>
-
-    <path id="library.maven:_org.yaml:snakeyaml:1.15.classpath">
-        <pathelement location="${path.variable.maven_repository}/org/yaml/snakeyaml/1.15/snakeyaml-1.15.jar"/>
-    </path>
-
-    <path id="library.maven:_xalan:serializer:2.7.2.classpath">
-        <pathelement location="${path.variable.maven_repository}/xalan/serializer/2.7.2/serializer-2.7.2.jar"/>
-    </path>
-
-    <path id="library.maven:_xalan:xalan:2.7.2.classpath">
-        <pathelement location="${path.variable.maven_repository}/xalan/xalan/2.7.2/xalan-2.7.2.jar"/>
-    </path>
-
-    <path id="library.maven:_xerces:xercesimpl:2.11.0.classpath">
-        <pathelement location="${path.variable.maven_repository}/xerces/xercesImpl/2.11.0/xercesImpl-2.11.0.jar"/>
-    </path>
-
-    <path id="library.maven:_xml-apis:xml-apis:1.4.01.classpath">
-        <pathelement location="${path.variable.maven_repository}/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar"/>
-    </path>
-
-
-    <!-- Global Libraries -->
-    <!-- Register Custom Compiler Taskdefs -->
-    <property name="javac2.home" value="${jdk.home.1.8}/lib"/>
-    <path id="javac2.classpath">
-        <pathelement location="${javac2.home}/javac2.jar"/>
-        <pathelement location="${javac2.home}/jdom.jar"/>
-        <pathelement location="${javac2.home}/asm-all.jar"/>
-        <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
-    </path>
-    <!--<target name="register.custom.compilers">-->
-    <!--<taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>-->
-    <!--<taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>-->
-    <!--</target>-->
-
-    <!-- Modules -->
-
-
-    <!-- Module NewMavenProject -->
-
-    <dirname property="module.newmavenproject.basedir" file="${ant.file}"/>
-
-
-    <property name="module.jdk.home.newmavenproject" value="${jdk.home.1.8}"/>
-    <property name="module.jdk.bin.newmavenproject" value="${jdk.bin.1.8}"/>
-    <property name="module.jdk.classpath.newmavenproject" value="jdk.classpath.1.8"/>
-
-    <property name="compiler.args.newmavenproject" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
-
-    <property name="newmavenproject.output.dir" value="${module.newmavenproject.basedir}/target/classes"/>
-    <property name="newmavenproject.testoutput.dir" value="${module.newmavenproject.basedir}/target/test-classes"/>
-
-    <path id="newmavenproject.module.bootclasspath">
-        <!-- Paths to be included in compilation bootclasspath -->
-    </path>
-
-    <path id="newmavenproject.module.production.classpath">
-        <path refid="${module.jdk.classpath.newmavenproject}"/>
-        <path refid="library.maven:_org.testng:testng:6.9.9.classpath"/>
-        <path refid="library.maven:_com.beust:jcommander:1.48.classpath"/>
-        <path refid="library.maven:_org.apache.ant:ant:1.7.0.classpath"/>
-        <path refid="library.maven:_org.apache.ant:ant-launcher:1.7.0.classpath"/>
-        <path refid="library.maven:_org.yaml:snakeyaml:1.15.classpath"/>
-        <path refid="library.maven:_org.beanshell:bsh:2.0b4.classpath"/>
-    </path>
-
-    <path id="newmavenproject.runtime.production.module.classpath">
-        <pathelement location="${newmavenproject.output.dir}"/>
-        <path refid="library.maven:_org.testng:testng:6.9.9.classpath"/>
-        <path refid="library.maven:_com.beust:jcommander:1.48.classpath"/>
-        <path refid="library.maven:_org.apache.ant:ant:1.7.0.classpath"/>
-        <path refid="library.maven:_org.apache.ant:ant-launcher:1.7.0.classpath"/>
-        <path refid="library.maven:_org.yaml:snakeyaml:1.15.classpath"/>
-        <path refid="library.maven:_org.beanshell:bsh:2.0b4.classpath"/>
-    </path>
-
-    <path id="newmavenproject.module.classpath">
-        <path refid="${module.jdk.classpath.newmavenproject}"/>
-        <pathelement location="${newmavenproject.output.dir}"/>
-        <path refid="library.maven:_com.saucelabs:saucerest:1.0.28.classpath"/>
-        <path refid="library.maven:_org.scalatest:scalatest_2.11:2.2.4.classpath"/>
-        <path refid="library.maven:_joda-time:joda-time:2.9.1.classpath"/>
-        <path refid="library.maven:_com.github.detro.ghostdriver:phantomjsdriver:1.1.0.classpath"/>
-        <path refid="library.maven:_junit:junit:3.8.1.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-chrome-driver:2.48.2.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-remote-driver:2.48.2.classpath"/>
-        <path refid="library.maven:_cglib:cglib-nodep:2.1_3.classpath"/>
-        <path refid="library.maven:_com.google.code.gson:gson:2.3.1.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-api:2.48.2.classpath"/>
-        <path refid="library.maven:_org.apache.httpcomponents:httpclient:4.5.1.classpath"/>
-        <path refid="library.maven:_org.apache.httpcomponents:httpcore:4.4.3.classpath"/>
-        <path refid="library.maven:_commons-logging:commons-logging:1.2.classpath"/>
-        <path refid="library.maven:_commons-codec:commons-codec:1.9.classpath"/>
-        <path refid="library.maven:_com.google.guava:guava:18.0.classpath"/>
-        <path refid="library.maven:_org.apache.commons:commons-exec:1.3.classpath"/>
-        <path refid="library.maven:_net.java.dev.jna:jna:4.1.0.classpath"/>
-        <path refid="library.maven:_net.java.dev.jna:jna-platform:4.1.0.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-java:2.48.2.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-edge-driver:2.48.2.classpath"/>
-        <path refid="library.maven:_commons-io:commons-io:2.4.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-htmlunit-driver:2.48.2.classpath"/>
-        <path refid="library.maven:_net.sourceforge.htmlunit:htmlunit:2.18.classpath"/>
-        <path refid="library.maven:_xalan:xalan:2.7.2.classpath"/>
-        <path refid="library.maven:_xalan:serializer:2.7.2.classpath"/>
-        <path refid="library.maven:_commons-collections:commons-collections:3.2.1.classpath"/>
-        <path refid="library.maven:_org.apache.commons:commons-lang3:3.4.classpath"/>
-        <path refid="library.maven:_org.apache.httpcomponents:httpmime:4.5.classpath"/>
-        <path refid="library.maven:_net.sourceforge.htmlunit:htmlunit-core-js:2.17.classpath"/>
-        <path refid="library.maven:_xerces:xercesimpl:2.11.0.classpath"/>
-        <path refid="library.maven:_xml-apis:xml-apis:1.4.01.classpath"/>
-        <path refid="library.maven:_net.sourceforge.nekohtml:nekohtml:1.9.22.classpath"/>
-        <path refid="library.maven:_net.sourceforge.cssparser:cssparser:0.9.16.classpath"/>
-        <path refid="library.maven:_org.w3c.css:sac:1.3.classpath"/>
-        <path refid="library.maven:_org.eclipse.jetty.websocket:websocket-client:9.2.12.v20150709.classpath"/>
-        <path refid="library.maven:_org.eclipse.jetty:jetty-util:9.2.12.v20150709.classpath"/>
-        <path refid="library.maven:_org.eclipse.jetty:jetty-io:9.2.12.v20150709.classpath"/>
-        <path refid="library.maven:_org.eclipse.jetty.websocket:websocket-common:9.2.12.v20150709.classpath"/>
-        <path refid="library.maven:_org.eclipse.jetty.websocket:websocket-api:9.2.12.v20150709.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-firefox-driver:2.48.2.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-ie-driver:2.48.2.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-safari-driver:2.48.2.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-support:2.48.2.classpath"/>
-        <path refid="library.maven:_org.webbitserver:webbit:0.4.14.classpath"/>
-        <path refid="library.maven:_io.netty:netty:3.5.2.final.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-leg-rc:2.48.2.classpath"/>
-        <path refid="library.maven:_org.testng:testng:6.9.9.classpath"/>
-        <path refid="library.maven:_com.beust:jcommander:1.48.classpath"/>
-        <path refid="library.maven:_org.apache.ant:ant:1.7.0.classpath"/>
-        <path refid="library.maven:_org.apache.ant:ant-launcher:1.7.0.classpath"/>
-        <path refid="library.maven:_org.yaml:snakeyaml:1.15.classpath"/>
-        <path refid="library.maven:_org.beanshell:bsh:2.0b4.classpath"/>
-    </path>
-
-    <path id="newmavenproject.runtime.module.classpath">
-        <pathelement location="${newmavenproject.testoutput.dir}"/>
-        <pathelement location="${newmavenproject.output.dir}"/>
-        <path refid="library.maven:_org.scalatest:scalatest_2.11:2.2.4.classpath"/>
-        <path refid="library.maven:_com.saucelabs:saucerest:1.0.28.classpath"/>
-        <path refid="library.maven:_joda-time:joda-time:2.9.1.classpath"/>
-        <path refid="library.maven:_com.github.detro.ghostdriver:phantomjsdriver:1.1.0.classpath"/>
-        <path refid="library.maven:_junit:junit:3.8.1.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-chrome-driver:2.48.2.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-remote-driver:2.48.2.classpath"/>
-        <path refid="library.maven:_cglib:cglib-nodep:2.1_3.classpath"/>
-        <path refid="library.maven:_com.google.code.gson:gson:2.3.1.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-api:2.48.2.classpath"/>
-        <path refid="library.maven:_org.apache.httpcomponents:httpclient:4.5.1.classpath"/>
-        <path refid="library.maven:_org.apache.httpcomponents:httpcore:4.4.3.classpath"/>
-        <path refid="library.maven:_commons-logging:commons-logging:1.2.classpath"/>
-        <path refid="library.maven:_commons-codec:commons-codec:1.9.classpath"/>
-        <path refid="library.maven:_com.google.guava:guava:18.0.classpath"/>
-        <path refid="library.maven:_org.apache.commons:commons-exec:1.3.classpath"/>
-        <path refid="library.maven:_net.java.dev.jna:jna:4.1.0.classpath"/>
-        <path refid="library.maven:_net.java.dev.jna:jna-platform:4.1.0.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-java:2.48.2.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-edge-driver:2.48.2.classpath"/>
-        <path refid="library.maven:_commons-io:commons-io:2.4.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-htmlunit-driver:2.48.2.classpath"/>
-        <path refid="library.maven:_net.sourceforge.htmlunit:htmlunit:2.18.classpath"/>
-        <path refid="library.maven:_xalan:xalan:2.7.2.classpath"/>
-        <path refid="library.maven:_xalan:serializer:2.7.2.classpath"/>
-        <path refid="library.maven:_commons-collections:commons-collections:3.2.1.classpath"/>
-        <path refid="library.maven:_org.apache.commons:commons-lang3:3.4.classpath"/>
-        <path refid="library.maven:_org.apache.httpcomponents:httpmime:4.5.classpath"/>
-        <path refid="library.maven:_net.sourceforge.htmlunit:htmlunit-core-js:2.17.classpath"/>
-        <path refid="library.maven:_xerces:xercesimpl:2.11.0.classpath"/>
-        <path refid="library.maven:_xml-apis:xml-apis:1.4.01.classpath"/>
-        <path refid="library.maven:_net.sourceforge.nekohtml:nekohtml:1.9.22.classpath"/>
-        <path refid="library.maven:_net.sourceforge.cssparser:cssparser:0.9.16.classpath"/>
-        <path refid="library.maven:_org.w3c.css:sac:1.3.classpath"/>
-        <path refid="library.maven:_org.eclipse.jetty.websocket:websocket-client:9.2.12.v20150709.classpath"/>
-        <path refid="library.maven:_org.eclipse.jetty:jetty-util:9.2.12.v20150709.classpath"/>
-        <path refid="library.maven:_org.eclipse.jetty:jetty-io:9.2.12.v20150709.classpath"/>
-        <path refid="library.maven:_org.eclipse.jetty.websocket:websocket-common:9.2.12.v20150709.classpath"/>
-        <path refid="library.maven:_org.eclipse.jetty.websocket:websocket-api:9.2.12.v20150709.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-firefox-driver:2.48.2.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-ie-driver:2.48.2.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-safari-driver:2.48.2.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-support:2.48.2.classpath"/>
-        <path refid="library.maven:_org.webbitserver:webbit:0.4.14.classpath"/>
-        <path refid="library.maven:_io.netty:netty:3.5.2.final.classpath"/>
-        <path refid="library.maven:_org.seleniumhq.selenium:selenium-leg-rc:2.48.2.classpath"/>
-        <path refid="library.maven:_org.testng:testng:6.9.9.classpath"/>
-        <path refid="library.maven:_com.beust:jcommander:1.48.classpath"/>
-        <path refid="library.maven:_org.apache.ant:ant:1.7.0.classpath"/>
-        <path refid="library.maven:_org.apache.ant:ant-launcher:1.7.0.classpath"/>
-        <path refid="library.maven:_org.yaml:snakeyaml:1.15.classpath"/>
-        <path refid="library.maven:_org.beanshell:bsh:2.0b4.classpath"/>
-    </path>
-
-
-    <patternset id="excluded.from.module.newmavenproject">
-        <patternset refid="ignored.files"/>
-    </patternset>
-
-    <patternset id="excluded.from.compilation.newmavenproject">
-        <patternset refid="excluded.from.module.newmavenproject"/>
-    </patternset>
-
-    <path id="newmavenproject.module.sourcepath">
-        <dirset dir="${module.newmavenproject.basedir}">
-            <include name="src/main/java"/>
-        </dirset>
-    </path>
-
-    <path id="newmavenproject.module.test.sourcepath">
-        <dirset dir="${module.newmavenproject.basedir}">
-            <include name="src/test/java"/>
-        </dirset>
-    </path>
-
-
-    <target name="compile.module.newmavenproject"
-            depends="compile.module.newmavenproject.production,compile.module.newmavenproject.tests"
-            description="Compile module NewMavenProject"/>
-
-    <target name="compile.module.newmavenproject.production"
-            description="Compile module NewMavenProject; production classes">
-        <mkdir dir="${newmavenproject.output.dir}"/>
-        <javac destdir="${newmavenproject.output.dir}" includeantruntime="false" debug="${compiler.debug}"
-               nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true"
-               executable="${module.jdk.bin.newmavenproject}/javac">
-            <compilerarg line="${compiler.args.newmavenproject}"/>
-            <bootclasspath refid="newmavenproject.module.bootclasspath"/>
-            <classpath refid="newmavenproject.module.production.classpath"/>
-            <src refid="newmavenproject.module.sourcepath"/>
-            <patternset refid="excluded.from.compilation.newmavenproject"/>
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE project [
+        ]>
+
+<project name="Facebook" default="usage" basedir=".">
+
+    <!-- ========== Initialize Properties =================================== -->
+    <property environment="env"/>
+
+    <property name="ws.home" value="${basedir}"/>
+    <property name="ws.jars" value="${user.home}/.m2/repository"/>
+    <property name="test.dest" value="${ws.home}/build"/>
+    <property name="test.src" value="${ws.home}/src"/>
+    <property name="ant.home" value="/usr/local/Cellar/ant/1.9.6/libexe"/>
+    <property name="test.reportsDir" value="${ws.home}/reports"/>
+
+    <!--target name="start-selenium-server">
+        <java jar="${ws.home}/lib/selenium-server.jar"/>
+    </target-->
+
+    <target name="setClassPath" unless="test.classpath">
+        <path id="classpath_jars">
+            <fileset dir="${ws.jars}" includes="**/*.jar"/>
+        </path>
+        <pathconvert pathsep=":"
+                     property="test.classpath"
+                     refid="classpath_jars"/>
+    </target>
+
+    <target name="init" depends="setClassPath">
+        <tstamp>
+            <format property="start.time" pattern="MM/dd/yyyy hh:mm aa" />
+        </tstamp>
+        <condition property="ANT"
+                   value="${ant.home}/lib/ant-launcher.jar"
+                   else="${ant.home}/bin/ant">
+            <os family="mac" />
+        </condition>
+
+    </target>
+
+    <!-- all -->
+    <target name="all">
+    </target>
+
+    <!-- clean -->
+    <target name="clean">
+        <delete dir="${test.dest}"/>
+    </target>
+
+    <!-- compile -->
+    <target name="compile" depends="init, clean" >
+        <delete includeemptydirs="true" quiet="true">
+            <fileset dir="${test.dest}" includes="**/*"/>
+        </delete>
+        <echo message="making directory..."/>
+        <mkdir dir="${test.dest}"/>
+        <echo message="classpath------: ${test.classpath}"/>
+        <echo message="compiling..."/>
+        <javac
+                debug="true"
+                destdir="${test.dest}"
+                srcdir="${test.src}"
+                target="1.8"
+                classpath="${test.classpath}"
+                >
         </javac>
-
-        <copy todir="${newmavenproject.output.dir}">
-            <fileset dir="${module.newmavenproject.basedir}/src/main/java">
-                <patternset refid="compiler.resources"/>
-                <type type="file"/>
-            </fileset>
-        </copy>
     </target>
 
-    <target name="compile.module.newmavenproject.tests" depends="compile.module.newmavenproject.production"
-            description="compile module NewMavenProject; test classes" unless="skip.tests">
-        <mkdir dir="${newmavenproject.testoutput.dir}"/>
-        <javac destdir="${newmavenproject.testoutput.dir}" includeantruntime="${javac2.instrumentation.includeJavaRuntime}" debug="${compiler.debug}"
-               nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true"
-               executable="${module.jdk.bin.newmavenproject}/javac">
-            <compilerarg line="${compiler.args.newmavenproject}"/>
-            <bootclasspath refid="newmavenproject.module.bootclasspath"/>
-            <classpath refid="newmavenproject.module.classpath"/>
-            <src refid="newmavenproject.module.test.sourcepath"/>
-            <patternset refid="excluded.from.compilation.newmavenproject"/>
-        </javac>
-
-        <copy todir="${newmavenproject.testoutput.dir}">
-            <fileset dir="${module.newmavenproject.basedir}/src/test/java">
-                <patternset refid="compiler.resources"/>
-                <type type="file"/>
-            </fileset>
-        </copy>
+    <!-- build -->
+    <target name="build" depends="init">
     </target>
 
-    <!-- ==================================================================== -->
-    <!-- Run                                                             -->
-    <!-- ==================================================================== -->
-    <!-- Runs the file and generates Reportng report for TestNG-->
-    <property name="lib" value="${module.newmavenproject.basedir}/lib" />
-    <property name="bin" value="${module.newmavenproject.basedir}/bin" />
+    <target name="usage">
+        <echo>
+            ant run will execute the test
+        </echo>
+    </target>
 
-    <!-- ====== Set the classpath ====  -->
-    <path id="classpath">
-        <pathelement location="${bin}" />
-        <fileset dir="${lib}">
-            <include name="*.jar" />
-        </fileset>
+    <path id="test.run">
+        <fileset dir="${ws.jars}" includes="**/*.jar"/>
     </path>
 
+    <!-- run -->
+    <target name="run" >
+        <delete includeemptydirs="true" quiet="true">
+            <fileset dir="${test.reportsDir}" includes="**/*"/>
+        </delete>
+        <java jar="${ws.jars}"
+              classname="org.apache.tools.ant.launch.Launcher"
+              fork="true"
+              failonerror="true"
 
-    <target  name="run"
-             description="run examples with java"
-             depends="build.modules">
+              spawn="true" />
+        <junit fork="yes" haltonfailure="no" printsummary="yes">
+            <classpath refid="test.run" />
 
-        <echo message="testng-run "/>
-        <java fork="yes"
-              classpathref="classpath"
-              classname="org.testng.TestNG">
-            <arg value="-d"/>
-            <arg value="${newmavenproject.testoutput.dir}"/>
-            <arg value="${module.newmavenproject.basedir}/testng.xml"/>
-            <jvmarg value="-ea"/>
-        </java>
-        <echo>Some of these tests should have failed.  Statistics are available at</echo>
-        <echo>${newmavenproject.testoutput.dir}\index.html for a TestNG HTML report</echo>
+            <!--  <classpath ="${test.classpath}"/> -->
+            <batchtest  todir="${test.reportsDir}" fork="true">
+                <fileset dir="${test.dest}">
+
+                    <include name="com/wordpressTest/framework/selenium/CukesRunnerTest.class" />
+                    <!--include name="tests/suite1/FirstSuiteRunner.class" />
+                    <include name="tests/suite1/FirstSuiteRunner.class" /-->
+
+
+                </fileset>
+            </batchtest>
+            <formatter type="xml" />
+            <!---classpath refid="testcase.path" />  -->
+        </junit>
+        <junitreport todir="${test.reportsDir}">
+            <fileset dir="${test.reportsDir}">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report todir="${test.reportsDir}" />
+        </junitreport>
     </target>
 
-    <!-- Compile the java code from ${src} into ${bin} -->
+    <target name="makexsltreports">
+        <mkdir dir="${ws.home}/XSLT_Reports/output"/>
 
-    <!-- Runs the file and generates Reportng report for TestNG-->
-    <taskdef name="testng" classname="org.testng.TestNGAntTask" classpathref="classpath" />
-
-    <target name="testng-execution" depends="build.modules">
-        <mkdir dir="${newmavenproject.testoutput.dir}" />
-        <testng outputdir="${newmavenproject.testoutput.dir}" classpathref="classpath" useDefaultListeners="true">
-            <xmlfileset dir="${module.newmavenproject.basedir}" includes="testng.xml" />
-        </testng>
+        <xslt in="${test.reportsDir}/testng-results.xml" style="src/xslt/testng-results.xsl"
+              out="${ws.home}/XSLT_Reports/output/index.html" classpathref="test.run" processor="SaxonLiaison">
+            <param name="testNgXslt.outputDir" expression="${ws.home}/XSLT_Reports/output/"/>
+            <param name="testNgXslt.showRuntimeTotals" expression="true"/>
+        </xslt>
     </target>
 
+    <!-- ****************** targets not used ****************** -->
 
-
-    <!-- ==================================================================== -->
-    <target name="clean.module.newmavenproject" description="cleanup module">
-        <delete dir="${bin}" />
-        <delete dir="${newmavenproject.output.dir}"/>
-        <delete dir="${newmavenproject.testoutput.dir}"/>
-    </target>
-
-    <!-- Creating directories -->
-    <target name="create" depends="clean.module.newmavenproject">
-        <mkdir dir="${bin}" />
-        <mkdir dir="${newmavenproject.output.dir}"/>
-        <mkdir dir="${newmavenproject.testoutput.dir}" />
-    </target>
-
-    <target name="init" depends="create" description="Build initialization">
-        <!-- Perform any build initialization in this target -->
-    </target>
-
-    <target name="clean" depends="clean.module.newmavenproject" description="cleanup all"/>
-
-    <target name="build.modules" depends="init, clean" description="build all modules"/>
-
-    <target name="all" depends="testng-execution" description="build all"/>
 </project>

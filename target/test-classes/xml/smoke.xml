@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="main" verbose="2" parallel="classes" thread-count="1" allow-return-values="true">
+    <test name="smoke test">
+        <groups>
+            <run>
+                <include name="smoke"/>
+            </run>
+        </groups>
+        <packages>
+            <package name="com.wordpressTest.tests.*"/>
+        </packages>
+    </test>
+</suite>

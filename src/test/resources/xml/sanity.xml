@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Main Test Suite" verbose="5" parallel="classes">
+
+    <parameter name="browserType" value="safari"/>
+    <parameter name="appURL" value="https://uk.yahoo.com/"/>
+
+    <listeners>
+        <listener class-name="com.wordpressTest.framework.TestNGCustomReportListener"/>
+    </listeners>
+
+    <test name="Sanity Test Group">
+
+        <groups>
+
+            <define name="functest">
+                <include name="smoke"/>
+            </define>
+
+            <define name="all">
+                <include name="sanity"/>
+                <include name="functest"/>
+            </define>
+
+            <run>
+                <include name="all"/>
+            </run>
+        </groups>
+
+        <packages>
+            <package name="com.wordpressTest.tests.sanityTests.*"/>
+        </packages>
+
+    </test>
+
+</suite>

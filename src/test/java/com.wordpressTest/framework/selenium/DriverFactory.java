@@ -29,6 +29,7 @@ import static com.wordpressTest.framework.WebElementMap.getLocator;
 
 public class DriverFactory extends FunctionalCfg {
 
+    private static DesiredCapabilities capabilities;
     private static String sauceLabsSessionId;
     private static String testClassNameForVerboseReporting;
     private static final int IMPLICIT_WAIT_TIMEOUT = Integer.parseInt(FunctionalCfg.getEnvironmentProperty("IMPLICIT_WAIT_TIMEOUT"));
@@ -72,7 +73,7 @@ public class DriverFactory extends FunctionalCfg {
     }
 
     private static void TurnOnWait() {
-        if(!getBrowserName().toString().equalsIgnoreCase("Safari"))
+        if (!getBrowserName().toString().equalsIgnoreCase("Safari"))
             Instance.manage().timeouts().implicitlyWait(30, TimeUnit.MILLISECONDS);
     }
 
@@ -91,6 +92,17 @@ public class DriverFactory extends FunctionalCfg {
 
     public static boolean waitUntilVisible(final By locator) {
         return driverWait().until(ExpectedConditions.visibilityOfElementLocated(locator)) != null;
+    }
+
+    public static boolean waitUntilElementIsPresent(By by) {
+        Boolean wait = false;
+        try {
+            wait = (new WebDriverWait(Instance, 10)).until((WebDriver d) -> d.findElement(by)).isDisplayed();
+
+        } catch (StaleElementReferenceException e) {
+            e.getCause();
+        }
+        return wait;
     }
 
     public static void NoWait(Actions action) {
@@ -229,23 +241,15 @@ public class DriverFactory extends FunctionalCfg {
         DesiredCapabilities capabilities;
         switch (getBrowserName()) {
             case FIREFOX: {
-                FirefoxProfile fp = new FirefoxProfile();
-                fp.setPreference("getBrowser.download.manager.showWhenStarting", false);
-                fp.setPreference("getBrowser.helperApps.neverAsk.saveToDisk", "application/pdf");
-                Instance = new FirefoxDriver(fp);
+                initFirefoxDriver();
                 break;
             }
             case CHROME: {
-
-                System.setProperty("webdriver.chrome.driver", getChromeDriverPath());
-                capabilities = DesiredCapabilities.chrome();
-                capabilities.setCapability("chrome.switches", Arrays.asList("--disable-web-security"));
-                Instance = new ChromeDriver(capabilities);
+                initChromeDriver();
                 break;
             }
             case SAFARI: {
-                capabilities = DesiredCapabilities.safari();
-                Instance = new SafariDriver(capabilities);
+                initSafariDriver();
                 break;
             }
             case PHANTOMJS: {
@@ -272,7 +276,7 @@ public class DriverFactory extends FunctionalCfg {
     }
 
     private static String extractTestClassName(String fullyQualifiedTestClassName) {
-        return fullyQualifiedTestClassName.replace("com.wordpressTest.tests.", "");
+        return fullyQualifiedTestClassName.replace("com.com.com.wordpressTest.tests.", "");
     }
 
     private boolean isTestStartedFromTeamCityServer() {
@@ -281,6 +285,27 @@ public class DriverFactory extends FunctionalCfg {
 
     public static void endSession() {
         Instance.quit();
-        Instance = null;
+    }
+
+    protected static WebDriver initChromeDriver() {
+        System.setProperty("webdriver.chrome.driver", getChromeDriverPath());
+        capabilities = DesiredCapabilities.chrome();
+        capabilities.setCapability("chrome.switches", Arrays.asList("--disable-web-security"));
+        Instance = new ChromeDriver(capabilities);
+        return Instance;
+    }
+
+    protected static WebDriver initFirefoxDriver() {
+        FirefoxProfile fp = new FirefoxProfile();
+        fp.setPreference("getBrowser.download.manager.showWhenStarting", false);
+        fp.setPreference("getBrowser.helperApps.neverAsk.saveToDisk", "application/pdf");
+        Instance = new FirefoxDriver(fp);
+        return Instance;
+    }
+
+    protected static WebDriver initSafariDriver() {
+        capabilities = DesiredCapabilities.safari();
+        Instance = new SafariDriver(capabilities);
+        return Instance;
     }
 }

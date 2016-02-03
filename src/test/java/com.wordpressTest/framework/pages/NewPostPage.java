@@ -29,7 +29,7 @@ public class NewPostPage {
     }
 
     public static boolean IsInEditMode() {
-        DriverFactory.waitUntilPresent(getLocator("h1"));
+        DriverFactory.waitUntilElementIsPresent(getLocator("h1"));
         return DriverFactory.byElement("h1").getText().startsWith("Edit Page");
     }
 }

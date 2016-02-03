@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" verbose="5" name="Failed suite [Sample Test Suite]">
+  <parameter name="param two" value="Second parameter"/>
+  <parameter name="appURL" value="https://www.google.com/"/>
+  <parameter name="param one" value="First parameter"/>
+  <parameter name="browserType" value="chrome"/>
+  <test name="OptionalParamExample(failed)">
+    <classes>
+      <class name="com.wordpressTest.tests.OptionalParamExample">
+        <methods>
+          <include name="setUp"/>
+          <include name="tearDown"/>
+          <include name="testGoogleSearch"/>
+        </methods>
+      </class> <!-- com.wordpressTest.tests.OptionalParamExample -->
+    </classes>
+  </test> <!-- OptionalParamExample(failed) -->
+</suite> <!-- Failed suite [Sample Test Suite] -->

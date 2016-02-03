@@ -1,6 +1,6 @@
 package com.wordpressTest.framework.selenium;
 
-public enum SupportedBrowsers {
+enum SupportedBrowsers {
     FIREFOX,
     CHROME,
     SAFARI,

@@ -5,5 +5,8 @@ package com.wordpressTest.framework;
  */
 public class TestGroups {
     public static final String SMOKE = "smoke";
+    public static final String MOBILE = "mobile";
+    public static final String BLOGGING = "blogging";
+    public static final String SANITY = "sanity";
 }
 
