@@ -1,3 +1,3 @@
 # bilityTest
-# Learcing how to configure Jenkins for git hub
+# Learning how to configure Jenkins for git hub
 
